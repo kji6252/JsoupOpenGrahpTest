@@ -20,12 +20,16 @@ public class Test {
 		
 		try {
 			doc = Jsoup.connect(url).get();
-			Elements ogElements = doc.select("meta[property^=og]");
+			Elements ogElements = doc.select("meta");
 			for (Element e : ogElements) {
-				if(!result.containsKey(e.attr("property"))){
-					result.put(e.attr("property"), new ArrayList<String>());
+				String target = null;
+	            if (e.hasAttr("property")) target = "property";
+	            else if (e.hasAttr("name"))target = "name";
+				
+				if(!result.containsKey(target)){
+					result.put(target, new ArrayList<String>());
 				}
-				result.get(e.attr("property")).add(e.attr("content"));
+				result.get(target).add(e.attr("content"));
 			}
 			
 			for(String s : result.keySet())
@@ -51,12 +55,16 @@ public class Test {
 		
 		try {
 			doc = Jsoup.connect(url).get();
-			Elements ogElements = doc.select("meta[property^=og]");
+			Elements ogElements = doc.select("meta");
 			for (Element e : ogElements) {
-				if(!result.containsKey(e.attr("property"))){
-					result.put(e.attr("property"), new ArrayList<String>());
+				String target = null;
+	            if (e.hasAttr("property")) target = "property";
+	            else if (e.hasAttr("name"))target = "name";
+
+				if(!result.containsKey(target)){
+					result.put(target, new ArrayList<String>());
 				}
-				result.get(e.attr("property")).add(e.attr("content"));
+				result.get(target).add(e.attr("content"));
 			}
 			
 			for(String s : REQUIRED_META){
