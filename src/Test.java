@@ -22,9 +22,7 @@ public class Test {
 			doc = Jsoup.connect(url).get();
 			Elements ogElements = doc.select("meta[property^=og], meta[name^=og]");
 			for (Element e : ogElements) {
-				String target=null;
-				if(e.hasAttr("property")) target = "property";
-				else if(e.hasAttr("name")) target = "name";
+				String target= e.hasAttr("property") ? "property" : "name";
 				
 				if(!result.containsKey(e.attr(target))){
 					result.put(e.attr(target), new ArrayList<String>());
@@ -57,9 +55,7 @@ public class Test {
 			doc = Jsoup.connect(url).get();
 			Elements ogElements = doc.select("meta[property^=og], meta[name^=og]");
 			for (Element e : ogElements) {
-				String target=null;
-				if(e.hasAttr("property")) target = "property";
-				else if(e.hasAttr("name")) target = "name";
+				String target= e.hasAttr("property") ? "property" : "name";
 				
 				if(!result.containsKey(e.attr(target))){
 					result.put(e.attr(target), new ArrayList<String>());
