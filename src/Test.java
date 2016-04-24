@@ -20,13 +20,13 @@ public class Test {
 		
 		try {
 			doc = Jsoup.connect(url).get();
-			Elements ogElements = doc.select("meta");
+			Elements ogElements = doc.select("meta[property^=og], meta[name^=og]");
 			for (Element e : ogElements) {
-				String target = "";
-	            if (e.hasAttr("property")) target = "property";
-	            else if (e.hasAttr("name"))target = "name";
+				String target=null;
+				if(e.hasAttr("property")) target = "property";
+				else if(e.hasAttr("name")) target = "name";
 				
-				if(!(result.containsKey(target) && target)){
+				if(!result.containsKey(e.attr(target))){
 					result.put(e.attr(target), new ArrayList<String>());
 				}
 				result.get(e.attr(target)).add(e.attr("content"));
@@ -49,19 +49,19 @@ public class Test {
 	@org.junit.Test
 	public void test2() {
 		Document doc;
-		String url = "http://zzong.net";
+		String url = "http://zzong.net/post/6";
 		Map<String, List<String>> result = new HashMap<String,List<String>>();
-		String[] REQUIRED_META = new String[]{"og:title", "og:type", "og:image", "og:url" };
+		String[] REQUIRED_META = new String[]{"og:title", "og:type", "og:image", "og:url", "og:description" };
 		
 		try {
 			doc = Jsoup.connect(url).get();
-			Elements ogElements = doc.select("meta");
+			Elements ogElements = doc.select("meta[property^=og], meta[name^=og]");
 			for (Element e : ogElements) {
-				String target = null;
-	            if (e.hasAttr("property")) target = "property";
-	            else if (e.hasAttr("name"))target = "name";
-
-				if(!result.containsKey(target)){
+				String target=null;
+				if(e.hasAttr("property")) target = "property";
+				else if(e.hasAttr("name")) target = "name";
+				
+				if(!result.containsKey(e.attr(target))){
 					result.put(e.attr(target), new ArrayList<String>());
 				}
 				result.get(e.attr(target)).add(e.attr("content"));
@@ -81,6 +81,10 @@ public class Test {
 					} else if (s.equals(REQUIRED_META[3])){
 						result.put(REQUIRED_META[3]
 								, Arrays.asList(new String[]{doc.baseUri()}));
+					}
+					else if (s.equals(REQUIRED_META[4])){
+						result.put(REQUIRED_META[4]
+								, Arrays.asList(new String[]{doc.select("meta[property=description], meta[name=description]").eq(0).attr("content")}));
 					}
 				}
 
