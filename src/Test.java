@@ -22,14 +22,14 @@ public class Test {
 			doc = Jsoup.connect(url).get();
 			Elements ogElements = doc.select("meta");
 			for (Element e : ogElements) {
-				String target = null;
+				String target = "";
 	            if (e.hasAttr("property")) target = "property";
 	            else if (e.hasAttr("name"))target = "name";
 				
-				if(!result.containsKey(target)){
-					result.put(target, new ArrayList<String>());
+				if(!(result.containsKey(target) && target)){
+					result.put(e.attr(target), new ArrayList<String>());
 				}
-				result.get(target).add(e.attr("content"));
+				result.get(e.attr(target)).add(e.attr("content"));
 			}
 			
 			for(String s : result.keySet())
@@ -62,9 +62,9 @@ public class Test {
 	            else if (e.hasAttr("name"))target = "name";
 
 				if(!result.containsKey(target)){
-					result.put(target, new ArrayList<String>());
+					result.put(e.attr(target), new ArrayList<String>());
 				}
-				result.get(target).add(e.attr("content"));
+				result.get(e.attr(target)).add(e.attr("content"));
 			}
 			
 			for(String s : REQUIRED_META){
