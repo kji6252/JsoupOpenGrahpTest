@@ -19,7 +19,11 @@ public class Test {
 		Map<String, List<String>> result = new HashMap<String,List<String>>();
 		
 		try {
-			doc = Jsoup.connect(url).get();
+			doc = Jsoup
+					.connect(url)
+					.userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36")  
+			        .referrer("http://www.google.com")  
+					.get();
 			Elements ogElements = doc.select("meta[property^=og], meta[name^=og]");
 			for (Element e : ogElements) {
 				String target= e.hasAttr("property") ? "property" : "name";
@@ -39,20 +43,19 @@ public class Test {
 
 	}
 	
-	
-	
-	
-	
-	
 	@org.junit.Test
 	public void test2() {
 		Document doc;
-		String url = "http://zzong.net/post/6";
+		String url = "http://stackoverflow.com/questions/9249359/is-it-possible-to-vertically-align-text-within-a-div";
 		Map<String, List<String>> result = new HashMap<String,List<String>>();
 		String[] REQUIRED_META = new String[]{"og:title", "og:type", "og:image", "og:url", "og:description" };
 		
 		try {
-			doc = Jsoup.connect(url).get();
+			doc = Jsoup
+					.connect(url)
+					.userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36")  
+			        .referrer("http://www.google.com")  
+					.get();
 			Elements ogElements = doc.select("meta[property^=og], meta[name^=og]");
 			for (Element e : ogElements) {
 				String target= e.hasAttr("property") ? "property" : "name";
